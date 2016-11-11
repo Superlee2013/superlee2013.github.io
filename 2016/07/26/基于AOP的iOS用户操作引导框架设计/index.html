@@ -1,0 +1,1027 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="框架,AOP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Superlee's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="背景有一种现象，App设计者觉得理所当然的操作方式，却常常被用户所忽视，为了防止这种现象发生，就要为App设计一个帮助，一种低成本的方案是将帮助文档写成HTML然后展示给用户，这样的方式常常不能带来好的效果，一种较好的方式是高亮用户应该点击的区域，对其他部分进行遮盖，并用说明文字提醒用户，如下图所示。点击这里观看动画演示
+下载框架SGUserGuide已经上传到github，点击前去github下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于AOP的iOS用户操作引导框架设计">
+<meta property="og:url" content="http://superleehome.oschina.io/2016/07/26/基于AOP的iOS用户操作引导框架设计/index.html">
+<meta property="og:site_name" content="Superlee's blog">
+<meta property="og:description" content="背景有一种现象，App设计者觉得理所当然的操作方式，却常常被用户所忽视，为了防止这种现象发生，就要为App设计一个帮助，一种低成本的方案是将帮助文档写成HTML然后展示给用户，这样的方式常常不能带来好的效果，一种较好的方式是高亮用户应该点击的区域，对其他部分进行遮盖，并用说明文字提醒用户，如下图所示。点击这里观看动画演示
+下载框架SGUserGuide已经上传到github，点击前去github下">
+<meta property="og:image" content="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.png">
+<meta property="og:updated_time" content="2016-11-11T03:23:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于AOP的iOS用户操作引导框架设计">
+<meta name="twitter:description" content="背景有一种现象，App设计者觉得理所当然的操作方式，却常常被用户所忽视，为了防止这种现象发生，就要为App设计一个帮助，一种低成本的方案是将帮助文档写成HTML然后展示给用户，这样的方式常常不能带来好的效果，一种较好的方式是高亮用户应该点击的区域，对其他部分进行遮盖，并用说明文字提醒用户，如下图所示。点击这里观看动画演示
+下载框架SGUserGuide已经上传到github，点击前去github下">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311798335376197000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://superleehome.oschina.io/2016/07/26/基于AOP的iOS用户操作引导框架设计/"/>
+
+  <title> 基于AOP的iOS用户操作引导框架设计 | Superlee's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Superlee's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">时光且行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                基于AOP的iOS用户操作引导框架设计
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-26T16:36:11+08:00" content="2016-07-26">
+              2016-07-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/26/基于AOP的iOS用户操作引导框架设计/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/26/基于AOP的iOS用户操作引导框架设计/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/26/基于AOP的iOS用户操作引导框架设计/" class="leancloud_visitors" data-flag-title="基于AOP的iOS用户操作引导框架设计">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>有一种现象，App设计者觉得理所当然的操作方式，却常常被用户所忽视，为了防止这种现象发生，就要为App设计一个帮助，一种低成本的方案是将帮助文档写成HTML然后展示给用户，这样的方式常常不能带来好的效果，一种较好的方式是高亮用户应该点击的区域，对其他部分进行遮盖，并用说明文字提醒用户，如下图所示。<a href="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.gif" target="_blank" rel="external">点击这里观看动画演示</a><br><img src="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.png" alt=""></p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>框架<a href="https://github.com/Soulghost/SGUserGuide" target="_blank" rel="external">SGUserGuide</a>已经上传到github，<a href="https://github.com/Soulghost/SGUserGuide" target="_blank" rel="external">点击前去github下载</a>，欢迎Star！</p>
+<h2 id="关键"><a href="#关键" class="headerlink" title="关键"></a>关键</h2><p>要实现这种引导，关键问题有二，一是如何拿到允许交互的控件，二是如何处理引导步骤的推进关系。<br>对于第一个问题，可以通过keyPath解决，keyPath的强大之处在于可以用点语法拿到更深层的私有，例如我们的ViewController有一个私有属性topView，而topView又有私有属性topButton，那么我们使用<code>topView.topButton</code>即可从ViewController中拿到控件topButton而丝毫不破坏其封装性。<br>对于第二个问题，可以通过AOP编程解决。我们知道大部分的交互都涉及页面切换，例如上图点击按钮后进入编辑页面，因此页面的切换可以作为一个“切面”，我们通过这个切面来处理大部分的引导步骤推进。我们可以通过<strong>Method Swizzling</strong>来拦截所有的viewWillAppear:方法，并处理引导步骤的判断与推进，需要注意的是还有一些不涉及页面切换的引导步骤，则需要在适当的地方手动推进。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="描述用户引导步骤的类的设计"><a href="#描述用户引导步骤的类的设计" class="headerlink" title="描述用户引导步骤的类的设计"></a>描述用户引导步骤的类的设计</h3><p>为了描述一个引导步骤，首先要判断当前页面是否应该被引导，通过ViewController的类型来判断；其次需要的是可交互控件，通过keyPath来寻找；除此之外，还需要对用户的提示信息，这个类的具体设计如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@interface SGGuideNode : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, assign) Class controllerClass;</div><div class="line">@property (nonatomic, strong) NSString *permitViewPath;</div><div class="line">@property (nonatomic, copy) NSString *message;</div><div class="line">@property (nonatomic, assign) BOOL reverse;</div><div class="line"></div><div class="line">+ (instancetype)nodeWithController:(Class)controller permitViewPath:(NSString *)permitViewPath message:(NSString *)message reverse:(BOOL)reverse;</div><div class="line">+ (instancetype)endNodeWithController:(Class)controller;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>其中reverse是一个用于反转遮盖与可交互控件的属性，用于类似于“进行一项除去退出以外的操作”的情景。<br>通过两个类方法可快速的创建一个步骤结点，endNode作为结束结点，用于判断用户引导是否结束。</p>
+<h3 id="遮盖层视图设计"><a href="#遮盖层视图设计" class="headerlink" title="遮盖层视图设计"></a>遮盖层视图设计</h3><h4 id="拦截交互事件"><a href="#拦截交互事件" class="headerlink" title="拦截交互事件"></a>拦截交互事件</h4><p>遮盖层视图需要盖住界面，并且在可交互区域“挖洞”，要实现这种功能，可以通过pointInside:withEvent:方法处理点击事件，对于落在洞外的点交给遮盖层处理，也就是返回YES，这样就保证了原来的交互事件被拦截。<br>其中permitRect为允许交互的视图的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event &#123;</div><div class="line">    BOOL ret = !CGRectContainsPoint(self.permitRect, point);</div><div class="line">    if (self.node.reverse) &#123;</div><div class="line">        ret = !ret;</div><div class="line">    &#125;</div><div class="line">    return ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="绘制遮盖区域与允许点击区域"><a href="#绘制遮盖区域与允许点击区域" class="headerlink" title="绘制遮盖区域与允许点击区域"></a>绘制遮盖区域与允许点击区域</h4><p>处理完了点击事件，我们只需要通过drawRect:在遮盖区绘制透明的灰色，在允许交互区域绘制透明色即可做出预想的效果。<br>首先我们要定义出maskColor和holeColor，然后先对整个遮盖层视图填充maskColor，再对允许交互区填充holeColor。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)drawRect:(CGRect)rect &#123;</div><div class="line">    // 省略maskColor、holeColor的定义与赋值代码</div><div class="line">    [maskColor setFill];</div><div class="line">    UIRectFill(rect);</div><div class="line">    // 省略允许点击区域permitRect的计算代码</div><div class="line">    [holeColor setFill];</div><div class="line">    UIRectFill(self.permitRect);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="计算说明文字的区域"><a href="#计算说明文字的区域" class="headerlink" title="计算说明文字的区域"></a>计算说明文字的区域</h4><p>接下来一个问题是提示文字的位置，提示文字应该紧贴可交互区域，并且应该尽可能拥有更多的空间，因此我们需要计算可交互区域四周的面积，并选择一块最大的区域。</p>
+<h4 id="添加遮盖层"><a href="#添加遮盖层" class="headerlink" title="添加遮盖层"></a>添加遮盖层</h4><p>最最关键的问题是遮盖层应该添加到谁的view身上，由于在触发一个引导步骤时已经拿到了当前显示的视图控制器（引导步骤的触发通过拦截viewWillAppear:实现，因此可以拿到视图控制器对象），因此添加变得十分简单。<br><strong>不要简单的认为将遮盖层添加到视图控制器的view即可，因为视图控制器可能有NavigationController或者TabbarController包裹，如果只是添加到视图控制器的view无法盖住顶部和底部区域</strong><br>基于这个考虑，我们按照tabBarController.view&gt;navigationController.view&gt;viewController.view的优先级来添加遮盖层。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void)showInViewController:(UIViewController *)viewController &#123;</div><div class="line">    // 每次显示前，保证显示中的遮盖层已经被移除，通过removeFromSuperview移除。</div><div class="line">    [self hide];</div><div class="line">    self.permitView = [viewController valueForKeyPath:self.node.permitViewPath];</div><div class="line">    self.messageLabel.text = self.node.message;</div><div class="line">    if (viewController.tabBarController) &#123;</div><div class="line">        [viewController.tabBarController.view addSubview:self];</div><div class="line">    &#125;else if (viewController.navigationController) &#123;</div><div class="line">        [viewController.navigationController.view addSubview:self];</div><div class="line">    &#125; else &#123;</div><div class="line">        [viewController.view addSubview:self];</div><div class="line">    &#125;</div><div class="line">    self.frame = self.superview.frame;</div><div class="line">    [self setNeedsDisplay];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里包含了对步骤结点的解析，注意遮盖的尺寸与要盖住的视图大小一致，最后一句会触发drawRect:根据最新的结点解析数据绘制遮盖层与允许交互层。</p>
+<h4 id="移除遮盖层"><a href="#移除遮盖层" class="headerlink" title="移除遮盖层"></a>移除遮盖层</h4><p>移除遮盖层，只需要调用removeFromSuperview即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)hide &#123;</div><div class="line">    [self removeFromSuperview];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="调度器的设计"><a href="#调度器的设计" class="headerlink" title="调度器的设计"></a>调度器的设计</h3><h4 id="调度器类的设计"><a href="#调度器类的设计" class="headerlink" title="调度器类的设计"></a>调度器类的设计</h4><p>要实现步骤的切换，需要一个全局调度器，它接收切面通知或者用户的手动通知来对步骤进行判断与切换。所有的步骤结点都被以数组的形式保存到调度器中，调度器通过游标cur来判断当前进行到的步骤。<br>为了使用方便，编程者只需要将结点数组传递给调度器，调度器便会自动开始处理步骤的判断与切换，例如下面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)setupGuide &#123;</div><div class="line">    SGGuideDispatcher *dp = [SGGuideDispatcher sharedDispatcher];</div><div class="line">    dp.nodes = @[</div><div class="line">                 [SGGuideNode nodeWithController:[FirstViewController class] permitViewPath:@&quot;addBtn&quot; message:@&quot;Please Click The Add Button And Choose Yes From the Alert.&quot; reverse:NO],</div><div class="line">                 [SGGuideNode nodeWithController:[FirstViewController class] permitViewPath:@&quot;wrap.innerView&quot; message:@&quot;Please Click the Info Button&quot; reverse:NO],</div><div class="line">                 [SGGuideNode nodeWithController:[SecondViewController class] permitViewPath:@&quot;tabBarController.tabBar&quot; message:@&quot;Please Change To Third Page&quot; reverse:NO],</div><div class="line">                 [SGGuideNode endNodeWithController:[ThirdViewController class]]</div><div class="line">                 ];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>为了实现这样的效果，需要将调度器设计成单例，并且通过nodes数组这一属性接收步骤结点，上面提到，不涉及到页面切换的步骤完成无法被捕获，因此需要用户手动推进，因此调度器还需要一个next方法来进行手动推进，综上所述，调度器的设计如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@interface SGGuideDispatcher : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, strong) NSArray&lt;SGGuideNode *&gt; *nodes;</div><div class="line"></div><div class="line">+ (instancetype)sharedDispatcher;</div><div class="line">- (void)next;</div><div class="line">// 重置引导步骤，用于调试</div><div class="line">- (void)reset;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<h4 id="拦截器设计"><a href="#拦截器设计" class="headerlink" title="拦截器设计"></a>拦截器设计</h4><p>上文提到，我们通过拦截viewWillAppear:方法来触发步骤的判断与切换，可以通过为UIViewController添加分类实现，在拦截后发出通知，以供调度器接收，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@implementation UIViewController (Tracking)</div><div class="line"></div><div class="line">+ (void)load &#123;</div><div class="line">    method_exchangeImplementations(class_getInstanceMethod([self class], @selector(viewWillAppear:)), class_getInstanceMethod([self class], @selector(track_viewWillAppear:)));</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)track_viewWillAppear:(BOOL)animated &#123;</div><div class="line">    [self track_viewWillAppear:animated];</div><div class="line">    [[NSNotificationCenter defaultCenter] postNotificationName:SGGuideTrigNotification object:@&#123;@&quot;viewController&quot;:self&#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<h4 id="调度器开始调度的时机"><a href="#调度器开始调度的时机" class="headerlink" title="调度器开始调度的时机"></a>调度器开始调度的时机</h4><p>上文提到调度器开始工作的时机是接收到步骤结点后，因此通过重写结点数组的setter来注册对拦截器通知的监听即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)setNodes:(NSArray&lt;SGGuideNode *&gt; *)nodes &#123;</div><div class="line">    _nodes = nodes;</div><div class="line">    // 重置游标</div><div class="line">    self.cur = 0;</div><div class="line">    // 防止重复注册</div><div class="line">    [[NSNotificationCenter defaultCenter] removeObserver:self];</div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trig:) name:SGGuideTrigNotification object:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样的设计十分明了，但是不利于对引导结束后再次启动App不开启调度的编程，故改良如下，通过Preference记录引导步骤游标cur的值，对于结束的引导cur为-1，如果cur是-1，则不接收步骤结点，防止浪费内存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)setNodes:(NSArray&lt;SGGuideNode *&gt; *)nodes &#123;</div><div class="line">    if ([[NSUserDefaults standardUserDefaults] integerForKey:kSGGuideDispatcherCur] == -1) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    _nodes = nodes;</div><div class="line">    if (self.cur &lt; nodes.count) &#123;</div><div class="line">        [[NSNotificationCenter defaultCenter] removeObserver:self];</div><div class="line">        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(trig:) name:SGGuideTrigNotification object:nil];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="调度器触发的时机"><a href="#调度器触发的时机" class="headerlink" title="调度器触发的时机"></a>调度器触发的时机</h4><p>通过上文我们知道，拦截器的通知触发了调度器的trig:方法，trig:方法用于处理调度器的触发逻辑，除此之外，还有手动触发调度器的方式，也通过发送通知实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)next &#123;</div><div class="line">    if (!self.currentViewController) return;</div><div class="line">    [[NSNotificationCenter defaultCenter] postNotificationName:SGGuideTrigNotification object:@&#123;@&quot;viewController&quot;:self.currentViewController&#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的currentViewController为当前展示的视图控制器，这个值在每次调度器触发时根据通知中的视图控制器来赋值，由于next前还没有进行页面切换，因此当前的视图控制器不变，依然是currentViewController。</p>
+<h4 id="调度器的触发逻辑"><a href="#调度器的触发逻辑" class="headerlink" title="调度器的触发逻辑"></a>调度器的触发逻辑</h4><p>调度器每次触发时，首先根据游标拿出当前步骤结点，并判断当前显示的视图控制器是否和步骤结点要求的匹配，如果匹配，则添加遮盖，并将游标后移。<br>上文提到最后一个步骤结点是endNode，用于判断调度的结束，endNode与其他步骤结点的区别是允许交互的视图的keyPath为空，一旦发现keyPath为空，则认为调度结束，清空nodes释放内存并且移除通知，并记录游标的值为-1，以防止下次打开App时重复启动调度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">- (void)trig:(NSNotification *)nof &#123;</div><div class="line">    if (self.cur &gt;= self.nodes.count) return;</div><div class="line">    SGGuideMaskView *maskView = [SGGuideMaskView sharedMask];</div><div class="line">    UIViewController *topVc = nof.object[@&quot;viewController&quot;];</div><div class="line">    SGGuideNode *node = self.nodes[self.cur];</div><div class="line">    if ([topVc isKindOfClass:node.controllerClass]) &#123;</div><div class="line">        self.currentViewController = topVc;</div><div class="line">        [maskView hide];</div><div class="line">        self.cur++;</div><div class="line">        if (node.permitViewPath == nil) &#123;</div><div class="line">            self.nodes = nil;</div><div class="line">            [[NSNotificationCenter defaultCenter] removeObserver:self];</div><div class="line">            [[NSUserDefaults standardUserDefaults] setInteger:-1 forKey:kSGGuideDispatcherCur];</div><div class="line">            [[NSUserDefaults standardUserDefaults] synchronize];</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        maskView.node = node;</div><div class="line">        [maskView showInViewController:topVc];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>实现用户引导有三个关键的类，引导结点<code>SGGuideNode</code>、遮盖层<code>SGGuideMaskView</code>和调度器<code>SGGuideDispatcher</code>，将引导结点的数组传递给调度器即可开始调度，调度的触发分为手动和自动两种方式，拦截器（UIViewController的分类）对页面切换进行拦截并触发调度，不涉及到页面切换的调度需要编程者通过调度器的next方法实现。每次触发调度时先判断是否与引导结点相符，相符则添加遮盖层并向后推进。<br>通过这样的设计，实现了几乎无侵入的用户引导，它不会破坏工程的结构，能提供良好的用户引导效果。</p>
+
+      
+      <hr>
+      <p>
+         博客: <a href="http://superleehome.oschina.io">http://superleehome.oschina.io/</a>
+         <br>
+         作者: <a href="http://superleehome.oschina.io/about">Superlee</a>
+      </p>
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持干货知识技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Superlee Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/AOP/" rel="tag">#AOP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/26/WiFi文件上传框架SGWiFiUpload/" rel="next" title="WiFi文件上传框架SGWiFiUpload">
+                <i class="fa fa-chevron-left"></i> WiFi文件上传框架SGWiFiUpload
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/26/层布局模型/" rel="prev" title="层布局模型">
+                层布局模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/26/基于AOP的iOS用户操作引导框架设计/"
+     data-title="基于AOP的iOS用户操作引导框架设计"
+     data-content=""
+     data-url="http://superleehome.oschina.io/2016/07/26/基于AOP的iOS用户操作引导框架设计/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/26/基于AOP的iOS用户操作引导框架设计/"
+           data-title="基于AOP的iOS用户操作引导框架设计" data-url="http://superleehome.oschina.io/2016/07/26/基于AOP的iOS用户操作引导框架设计/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Superlee" />
+          <p class="site-author-name" itemprop="name">Superlee</p>
+          <p class="site-description motion-element" itemprop="description">青春都一饷，且把浮生，换了代码轻狂~</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Superlee2013" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geek.csdn.net/" title="极客头条" target="_blank">极客头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.iteye.com/" title="ITEye" target="_blank">ITEye</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载"><span class="nav-number">2.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键"><span class="nav-number">3.</span> <span class="nav-text">关键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述用户引导步骤的类的设计"><span class="nav-number">4.1.</span> <span class="nav-text">描述用户引导步骤的类的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遮盖层视图设计"><span class="nav-number">4.2.</span> <span class="nav-text">遮盖层视图设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截交互事件"><span class="nav-number">4.2.1.</span> <span class="nav-text">拦截交互事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#绘制遮盖区域与允许点击区域"><span class="nav-number">4.2.2.</span> <span class="nav-text">绘制遮盖区域与允许点击区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算说明文字的区域"><span class="nav-number">4.2.3.</span> <span class="nav-text">计算说明文字的区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加遮盖层"><span class="nav-number">4.2.4.</span> <span class="nav-text">添加遮盖层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移除遮盖层"><span class="nav-number">4.2.5.</span> <span class="nav-text">移除遮盖层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器的设计"><span class="nav-number">4.3.</span> <span class="nav-text">调度器的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调度器类的设计"><span class="nav-number">4.3.1.</span> <span class="nav-text">调度器类的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截器设计"><span class="nav-number">4.3.2.</span> <span class="nav-text">拦截器设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度器开始调度的时机"><span class="nav-number">4.3.3.</span> <span class="nav-text">调度器开始调度的时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度器触发的时机"><span class="nav-number">4.3.4.</span> <span class="nav-text">调度器触发的时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度器的触发逻辑"><span class="nav-number">4.3.5.</span> <span class="nav-text">调度器的触发逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位小伙伴</span>
+  
+
+  
+    <span class="site-pv">我被看了<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Superlee</span>
+  <span class="with-love">
+        <i class="fa fa-envelope-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">superlee4life@foxmail.com</span>
+</div>
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"superleeblog2"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("x9h2WvWJwEXLMxFiGxoO6OvY-gzGzoHsz", "oc8OE6Iruzw7yKaiU0dU6QDr");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

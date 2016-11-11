@@ -1,0 +1,1027 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="框架," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Superlee's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="简介苹果官方为我们提供了简单手势的识别器，但对于图形手势，例如五角星、三角形等的识别，就需要自己实现了。通过识别这些手势，可以去执行特定的操作，或是输入公式、释放魔法等，可以为App增光添彩。
+下载与使用该框架已经上传到github，点击这里前去下载，欢迎Star！有关该框架的使用在github上已经写明，这里不再赘述，本文主要介绍的是图形手势识别的实现原理与框架的结构。
+框架的结构一个图形手势是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS图形手势识别框架SGGestureRecognizer">
+<meta property="og:url" content="http://superleehome.oschina.io/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/index.html">
+<meta property="og:site_name" content="Superlee's blog">
+<meta property="og:description" content="简介苹果官方为我们提供了简单手势的识别器，但对于图形手势，例如五角星、三角形等的识别，就需要自己实现了。通过识别这些手势，可以去执行特定的操作，或是输入公式、释放魔法等，可以为App增光添彩。
+下载与使用该框架已经上传到github，点击这里前去下载，欢迎Star！有关该框架的使用在github上已经写明，这里不再赘述，本文主要介绍的是图形手势识别的实现原理与框架的结构。
+框架的结构一个图形手势是">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-c62d2b5c430d2340.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-e62c42d1a24fe233.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-e3f2f6373e189e1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-aebaa8a1ad546f9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-c433974c7a074f23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2376201-de40f0616fa8297e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-11-11T03:23:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS图形手势识别框架SGGestureRecognizer">
+<meta name="twitter:description" content="简介苹果官方为我们提供了简单手势的识别器，但对于图形手势，例如五角星、三角形等的识别，就需要自己实现了。通过识别这些手势，可以去执行特定的操作，或是输入公式、释放魔法等，可以为App增光添彩。
+下载与使用该框架已经上传到github，点击这里前去下载，欢迎Star！有关该框架的使用在github上已经写明，这里不再赘述，本文主要介绍的是图形手势识别的实现原理与框架的结构。
+框架的结构一个图形手势是">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2376201-c62d2b5c430d2340.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311798335376197000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://superleehome.oschina.io/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/"/>
+
+  <title> iOS图形手势识别框架SGGestureRecognizer | Superlee's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Superlee's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">时光且行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS图形手势识别框架SGGestureRecognizer
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-26T16:15:08+08:00" content="2016-07-26">
+              2016-07-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/26/iOS图形手势识别框架SGGestureRecognizer/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/" class="leancloud_visitors" data-flag-title="iOS图形手势识别框架SGGestureRecognizer">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>苹果官方为我们提供了简单手势的识别器，但对于图形手势，例如五角星、三角形等的识别，就需要自己实现了。通过识别这些手势，可以去执行特定的操作，或是输入公式、释放魔法等，可以为App增光添彩。</p>
+<h2 id="下载与使用"><a href="#下载与使用" class="headerlink" title="下载与使用"></a>下载与使用</h2><p>该框架已经上传到github，<a href="https://github.com/Soulghost/SGGestureRecognizer" target="_blank" rel="external">点击这里前去下载</a>，欢迎Star！<br>有关该框架的使用在github上已经写明，这里不再赘述，本文主要介绍的是图形手势识别的实现原理与框架的结构。</p>
+<h2 id="框架的结构"><a href="#框架的结构" class="headerlink" title="框架的结构"></a>框架的结构</h2><p>一个图形手势是一条曲线，可以用采样点来描述，存储采样点的类为<code>SGGesturePoint</code>，使用它替代<code>CGPoint</code>，更符合面向对象的操作规范。<br>采样点的集合为<code>SGGestureSet</code>，它用于记录所有采样点以及手势的名称，以及标准化以后的手势向量。<br>手势向量使用<code>SGGestureVector</code>存储，向量通过将所有采样点的(x,y)坐标依次插入并标准化得来，手势向量用于进行余弦相似度计算。<br>用于标准化集合、生成向量、保存、加载与识别手势的类为<code>SGGestureManager</code>，它是一个单例对象，正常使用中只需要关心manager和set两个对象，其他对象由manager负责管理。</p>
+<h2 id="手势采样的过程"><a href="#手势采样的过程" class="headerlink" title="手势采样的过程"></a>手势采样的过程</h2><h3 id="1-采样"><a href="#1-采样" class="headerlink" title="1.采样"></a>1.采样</h3><p>Demo中给出的是使用UIPanGestureRecognizer完成的采样，每个采样点都是一个<code>CGPoint</code>，将其包装秤<code>NSValue</code>并且存储在数组中。</p>
+<h3 id="2-生成集合"><a href="#2-生成集合" class="headerlink" title="2.生成集合"></a>2.生成集合</h3><p>使用<code>SGGestureSet</code>的gestureSetWithName:points:方法，传入手势的名称与采样点（NSValue数组），即可使用采样点初始化一个集合。</p>
+<h3 id="3-重新采样"><a href="#3-重新采样" class="headerlink" title="3.重新采样"></a>3.重新采样</h3><p>将集合中的所有采样点构成的图形看作折线，根据所需要的采样密度确定采样间距interval，并在原曲线上生成均匀分布的采样点，生成采样点的代码如下，代码后将结合图例进行讲解。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">// to resample the curve, calculate the length of the curve</div><div class="line">SGGestureSet *tempSet = *set;</div><div class="line">double sumLength = 0;</div><div class="line">for (int i = 1; i &lt; tempSet.countPoints; i++) &#123;</div><div class="line">    SGGesturePoint *pt1 = [tempSet pointAtIndex:i];</div><div class="line">    SGGesturePoint *pt2 = [tempSet pointAtIndex:i - 1];</div><div class="line">    sumLength += [pt1 distanceTo:pt2];</div><div class="line">&#125;</div><div class="line">// resample with sample uniform distributed points</div><div class="line">SGGestureSet *resampleSet = [SGGestureSet gestureSetWithName:tempSet.name];</div><div class="line">double Interval = sumLength / self.samplePointCount;</div><div class="line">double D = 0;</div><div class="line">SGGesturePoint *p1 = [tempSet pointAtIndex:0];</div><div class="line">[resampleSet addGesturePoint:p1];</div><div class="line">for (int i = 1; i &lt; tempSet.countPoints;) &#123;</div><div class="line">    SGGesturePoint *p2 = [tempSet pointAtIndex:i];</div><div class="line">    double d = [p1 distanceTo:p2];</div><div class="line">    if ((D + d) &gt;= Interval) &#123;</div><div class="line">        double k = (Interval - D ) / d;</div><div class="line">        double x = p1.x + k * (p2.x - p1.x);</div><div class="line">        double y = p1.y + k * (p2.y - p1.y);</div><div class="line">        SGGesturePoint *p = [SGGesturePoint gesturePointWithCGPoint:CGPointMake(x, y)];</div><div class="line">        [resampleSet addGesturePoint:p];</div><div class="line">        D = 0;</div><div class="line">        p1 = p;</div><div class="line">    &#125;else&#123;</div><div class="line">        D += d;</div><div class="line">        p1 = p2;</div><div class="line">        i++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中D用于折现拐点后确定下一采样点的距离，d为原集合中的相邻采样点间距，下图是某图形手势的局部折线图。<br>第一次进入循环时，P1为原集合的第一个采样点（也是重新采样集合的第一个点），P2为原集合的第二个采样点，他们之间的距离P大于重新采样的采样点间距interval，这时D=0，D+d=d&gt;interval，因此进入if分支。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-c62d2b5c430d2340.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>接下来根据interval与d的比例关系求出x、y的步进值，从而得到下一个重新采样点的坐标点，并且这个点作为新的P1。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-e62c42d1a24fe233.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>以此类推，由于折线段的长度比interval大的多，因此能够分布许多新采样点，直到P1足够接近P2，使得interval&gt;d，如下图所示。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-e3f2f6373e189e1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这时下一个采样点应该落在下一个折线段上，并且为了保证均匀分布，下一个采样点距离折线段拐点的距离应该减去当前P1到P2的距离，这就是D的作用了。下图说明了这个计算的目的。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-aebaa8a1ad546f9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这时候会进入else分支，将P1更新为P2坐标，并且将d累加到D中，需要注意的是，下一个P2的坐标并不是原集合中的点，而是根据D计算出的点，因此应该跳过原集合中的下一个点，这就是i++的作用。如果曲线有足够多的短折线段，则会不断的进入else分支，一直累加d，直到满足新采样点间距，也就是D+d&gt;=interval，才生成一个新的采样点，本图中的情况仅仅计算了一次D就进入了下一条比较长的折线段，这时候清空D，开始在折线段上分布采样点，如下图所示。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-c433974c7a074f23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>经过多次这样的运算，就可以完成均匀分布的重新采样了，之后使用的是重新采样点的集合。</p>
+<h3 id="4-曲线位置的标准化"><a href="#4-曲线位置的标准化" class="headerlink" title="4.曲线位置的标准化"></a>4.曲线位置的标准化</h3><p>将集合中的x、y分别求平均值，得到曲线的重心，根据重心坐标将曲线移动到坐标原点，得到标准位置的曲线。</p>
+<h3 id="5-曲线尺寸的标准化"><a href="#5-曲线尺寸的标准化" class="headerlink" title="5.曲线尺寸的标准化"></a>5.曲线尺寸的标准化</h3><p>根据曲线的外接矩形与标准尺寸将曲线上的每个点进行比例运算，即可得到缩放到标准尺寸的曲线。</p>
+<h3 id="6-曲线转角的标准化"><a href="#6-曲线转角的标准化" class="headerlink" title="6.曲线转角的标准化"></a>6.曲线转角的标准化</h3><p>根据曲线上的第一个采样点与中心的连线的角度对曲线进行标准化，设当前角度为iAngle，目标角度为r，则如下图所示经过坐标变换将曲线旋转到红色位置。<br><img src="http://upload-images.jianshu.io/upload_images/2376201-de40f0616fa8297e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="7-生成向量"><a href="#7-生成向量" class="headerlink" title="7.生成向量"></a>7.生成向量</h3><p>为了进行后续运算，需要将二元采样点集化为一元集合，也可以看做多维向量，方法是依次将采样点的x、y坐标插入一元集合，并对向量进行标准化，每个向量代表一个手势，可用于后续的比较运算。</p>
+<h2 id="手势识别的过程"><a href="#手势识别的过程" class="headerlink" title="手势识别的过程"></a>手势识别的过程</h2><p>对于需要识别的手势，先经过上面的运算得到手势向量，然后将这个手势向量与手势库中的向量逐一进行余弦相似度的运算，余弦相似度比较的是向量的夹角，夹角越小则越相似，根据一定的阈值来筛选出符合条件的所有手势，并在遍历结束后取最优（运算结果最小）的作为匹配结果。<br>余弦相似度的计算代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (double)cosDistanceWithVector1:(SGGestureVector *)vec1 vector2:(SGGestureVector *)vec2 &#123;</div><div class="line">    double a = 0;</div><div class="line">    double b = 0;</div><div class="line">    for (int i = 0; i &lt;= vec1.length - 1 &amp;&amp; i &lt;= vec2.length - 1; i+=2) &#123;</div><div class="line">        a += [vec1 doubleAtIndex:i] * [vec2 doubleAtIndex:i] + [vec1 doubleAtIndex:i + 1] * [vec2 doubleAtIndex:i + 1];</div><div class="line">        b += [vec1 doubleAtIndex:i] * [vec2 doubleAtIndex:i + 1] - [vec1 doubleAtIndex:i + 1] * [vec2 doubleAtIndex:i];</div><div class="line">    &#125;</div><div class="line">    double angle = atan(b / a);</div><div class="line">    return acos(a * cos(angle) + b * sin(angle));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>识别一个手势的代码如下，先标准化手势集合并得到向量，然后在手势库中筛选，最后选择最优结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (NSString *)recognizeGestureSet:(SGGestureSet *)set &#123;</div><div class="line">    [self standardizeSet:&amp;set];</div><div class="line">    SGGestureVector *vec1 = [set getVector];</div><div class="line">    SGGestureSet *bestSet = nil;</div><div class="line">    double minD = CGFLOAT_MAX;</div><div class="line">    for (int i = 0; i &lt; self.gestureSets.count; i++) &#123;</div><div class="line">        SGGestureSet *libSet = self.gestureSets[i];</div><div class="line">        SGGestureVector *vec2 = [libSet getVector];</div><div class="line">        double D = [self cosDistanceWithVector1:vec1 vector2:vec2];</div><div class="line">        if(D &lt;= self.threshold &amp;&amp; D &lt; minD)&#123;</div><div class="line">            minD = D;</div><div class="line">            bestSet = libSet;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return bestSet.name;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="手势的存取"><a href="#手势的存取" class="headerlink" title="手势的存取"></a>手势的存取</h2><p>以上介绍的每一个与存储有关的类都遵循NSCoding协议，将每一个标准化的<code>SGGestureSet</code>存入到数组中，并将数组利用<code>NSKeyedArchiver</code>归档存储到磁盘，需要读取时再通过<code>NSKeyedUnarchiver</code>反归档即可。</p>
+
+      
+      <hr>
+      <p>
+         博客: <a href="http://superleehome.oschina.io">http://superleehome.oschina.io/</a>
+         <br>
+         作者: <a href="http://superleehome.oschina.io/about">Superlee</a>
+      </p>
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持干货知识技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Superlee Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/26/SublimeText2实用插件/" rel="next" title="Sublime Text 2 插件">
+                <i class="fa fa-chevron-left"></i> Sublime Text 2 插件
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/26/WiFi文件上传框架SGWiFiUpload/" rel="prev" title="WiFi文件上传框架SGWiFiUpload">
+                WiFi文件上传框架SGWiFiUpload <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/26/iOS图形手势识别框架SGGestureRecognizer/"
+     data-title="iOS图形手势识别框架SGGestureRecognizer"
+     data-content=""
+     data-url="http://superleehome.oschina.io/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/26/iOS图形手势识别框架SGGestureRecognizer/"
+           data-title="iOS图形手势识别框架SGGestureRecognizer" data-url="http://superleehome.oschina.io/2016/07/26/iOS图形手势识别框架SGGestureRecognizer/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Superlee" />
+          <p class="site-author-name" itemprop="name">Superlee</p>
+          <p class="site-description motion-element" itemprop="description">青春都一饷，且把浮生，换了代码轻狂~</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Superlee2013" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geek.csdn.net/" title="极客头条" target="_blank">极客头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.iteye.com/" title="ITEye" target="_blank">ITEye</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载与使用"><span class="nav-number">2.</span> <span class="nav-text">下载与使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架的结构"><span class="nav-number">3.</span> <span class="nav-text">框架的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手势采样的过程"><span class="nav-number">4.</span> <span class="nav-text">手势采样的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-采样"><span class="nav-number">4.1.</span> <span class="nav-text">1.采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-生成集合"><span class="nav-number">4.2.</span> <span class="nav-text">2.生成集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-重新采样"><span class="nav-number">4.3.</span> <span class="nav-text">3.重新采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-曲线位置的标准化"><span class="nav-number">4.4.</span> <span class="nav-text">4.曲线位置的标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-曲线尺寸的标准化"><span class="nav-number">4.5.</span> <span class="nav-text">5.曲线尺寸的标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-曲线转角的标准化"><span class="nav-number">4.6.</span> <span class="nav-text">6.曲线转角的标准化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-生成向量"><span class="nav-number">4.7.</span> <span class="nav-text">7.生成向量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手势识别的过程"><span class="nav-number">5.</span> <span class="nav-text">手势识别的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手势的存取"><span class="nav-number">6.</span> <span class="nav-text">手势的存取</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位小伙伴</span>
+  
+
+  
+    <span class="site-pv">我被看了<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Superlee</span>
+  <span class="with-love">
+        <i class="fa fa-envelope-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">superlee4life@foxmail.com</span>
+</div>
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"superleeblog2"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("x9h2WvWJwEXLMxFiGxoO6OvY-gzGzoHsz", "oc8OE6Iruzw7yKaiU0dU6QDr");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

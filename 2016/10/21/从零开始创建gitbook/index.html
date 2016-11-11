@@ -1,0 +1,1084 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gitbook,github," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Superlee's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文是博主在自己使用gitbook创建电子书，并通过github托管时躺过的坑的总结，如有表述不清楚的地方，请在评论区留言交流。本文的结构分为两大模块，分别为从零开始创建gitbook和协作开发gitbook,并假设所有的读者已有一个github账号。文章可能比较基础，大佬请绕路 ^_^
+
+由于某墙的原因，访问gitbook和github可能比较慢，请耐心等待，或者google搜索修改host翻墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始创建gitbook">
+<meta property="og:url" content="http://superleehome.oschina.io/2016/10/21/从零开始创建gitbook/index.html">
+<meta property="og:site_name" content="Superlee's blog">
+<meta property="og:description" content="本文是博主在自己使用gitbook创建电子书，并通过github托管时躺过的坑的总结，如有表述不清楚的地方，请在评论区留言交流。本文的结构分为两大模块，分别为从零开始创建gitbook和协作开发gitbook,并假设所有的读者已有一个github账号。文章可能比较基础，大佬请绕路 ^_^
+
+由于某墙的原因，访问gitbook和github可能比较慢，请耐心等待，或者google搜索修改host翻墙">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/signup.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/signin.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/access.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/public.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/githubrepo.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/createbook.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/configbook1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/chooserepo.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/succacc.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/addhook.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/gitaddress.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/hookdetail.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/hookcomplete.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/hookcomplete.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/gitbookhookurl.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/githubaddhook1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/githubaddhook2.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/testbook1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/testbook2.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/testbook3.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/testbook4.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/local1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/local2.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/local3.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/gitbookserve.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/local3.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/cf1.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c2.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/gitbookserve.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c3.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c4.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c5.png">
+<meta property="og:image" content="http://superleehome.oschina.io/upload/gitbook/c6.png">
+<meta property="og:updated_time" content="2016-11-11T04:39:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始创建gitbook">
+<meta name="twitter:description" content="本文是博主在自己使用gitbook创建电子书，并通过github托管时躺过的坑的总结，如有表述不清楚的地方，请在评论区留言交流。本文的结构分为两大模块，分别为从零开始创建gitbook和协作开发gitbook,并假设所有的读者已有一个github账号。文章可能比较基础，大佬请绕路 ^_^
+
+由于某墙的原因，访问gitbook和github可能比较慢，请耐心等待，或者google搜索修改host翻墙">
+<meta name="twitter:image" content="http://superleehome.oschina.io/upload/gitbook/signup.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6311798335376197000,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://superleehome.oschina.io/2016/10/21/从零开始创建gitbook/"/>
+
+  <title> 从零开始创建gitbook | Superlee's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Superlee's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">时光且行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从零开始创建gitbook
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-21T16:31:02+08:00" content="2016-10-21">
+              2016-10-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/gitbook/" itemprop="url" rel="index">
+                    <span itemprop="name">gitbook</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/21/从零开始创建gitbook/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/21/从零开始创建gitbook/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/21/从零开始创建gitbook/" class="leancloud_visitors" data-flag-title="从零开始创建gitbook">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是博主在自己使用gitbook创建电子书，并通过github托管时躺过的坑的总结，如有表述不清楚的地方，请在评论区留言交流。本文的结构分为两大模块，分别为<strong>从零开始创建gitbook</strong>和<strong>协作开发gitbook</strong>,并假设所有的读者已有一个github账号。文章可能比较基础，大佬请绕路 ^_^</p>
+<blockquote>
+<p>由于某墙的原因，访问gitbook和github可能比较慢，请耐心等待，或者google搜索修改host翻墙，或者使用fq梯子，这里博主实力推荐 Lantern 2.2.5 版本(至于为什么是2.2.5版本……因为它free)<br>ps: 前方多图，请在wifi环境下阅读，土豪。。。随意。。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="从零开始创建gitbook-单人"><a href="#从零开始创建gitbook-单人" class="headerlink" title="从零开始创建gitbook(单人)"></a>从零开始创建gitbook(单人)</h2><p>这里解释一波gitbook和github的关系，首先Gitbook和Git/Github都没有什么关系。它只是一个build book的工具而已，我们写好的markdown格式的文件，放在github上，然后通过gitbook获取到这些内容，在gitbook网站上编译生成html，生成gitbook.io形式的在线预览图书，通过webhook绑定github和gitbook,就能做到提交内容到github仓库，gitbook上的书籍实时更新。</p>
+<h3 id="1-申请gitbook账号"><a href="#1-申请gitbook账号" class="headerlink" title="1. 申请gitbook账号"></a>1. 申请gitbook账号</h3><p>已有gitbook账号看官请跳过这一步。<br>google搜索gitbook，进入<a href="https://www.gitbook.com/" target="_blank" rel="external">gitbook官网</a> ,也可以直接注册itbook账号，这里我们使用github登陆激活gitbook，毕竟它们是一家的产品，截图如下：<br><img src="/upload/gitbook/signup.png" alt="signup"><br><img src="/upload/gitbook/signin.png" alt="signin"></p>
+<h3 id="2-设置gitbook连接github权限"><a href="#2-设置gitbook连接github权限" class="headerlink" title="2. 设置gitbook连接github权限"></a>2. 设置gitbook连接github权限</h3><p>gitbook需要设置权限，才能连接到github上共有仓库的内容。<br>点击图像处的下拉按钮，选择<strong>Account Settings</strong>,进入gitbook账号设置<br><img src="/upload/gitbook/access.png" alt="access"><br>在<code>Personal settings &gt; Profile &gt; GitHub</code> 中，点击<code>Reconnet GitHub Account</code>按钮，选择<code>With acceess to public repositories</code>，上方会显示绿色的<code>ADDED</code>信息，表示连接成功,如图<br><img src="/upload/gitbook/public.png" alt="public"></p>
+<h3 id="3-在github上创建仓库"><a href="#3-在github上创建仓库" class="headerlink" title="3. 在github上创建仓库"></a>3. 在github上创建仓库</h3><p>我们切换到<strong>github</strong>网站，关于如何在github上创建仓库，这里不再赘述，直接上图<br>比如我们的仓库名为<strong>testbook</strong>,记得在最后生成仓库的时候,勾选下面的<code>Initialize this repository with a README</code><br><img src="/upload/gitbook/githubrepo.png" alt="githubrepo"></p>
+<h3 id="4-在gitbook上创建书籍"><a href="#4-在gitbook上创建书籍" class="headerlink" title="4. 在gitbook上创建书籍"></a>4. 在gitbook上创建书籍</h3><p>我们切换到<strong>gitbook</strong>网站，新建一本书籍，为了保持一致性，我们的书籍名也叫 <strong>testbook</strong>,当然可凭个人喜好选择书名,记得选择public书籍，如图<br><img src="/upload/gitbook/createbook.png" alt="createbook"></p>
+<h3 id="5-连接gitbook与github仓库"><a href="#5-连接gitbook与github仓库" class="headerlink" title="5. 连接gitbook与github仓库"></a>5. 连接gitbook与github仓库</h3><p>这一步是配置gitbook与github连接，让testbook这本书的内容连接到github仓库<br>点击<code>SETTING</code>,选择<code>Settings &gt; Github</code> ,点击<strong>Select a Repository</strong>，选择刚刚第三部在github上创建的仓库，如图：<br><img src="/upload/gitbook/configbook1.png" alt="configbook1"><br><img src="/upload/gitbook/chooserepo.png" alt="chooserepo"><br>点击 <strong>Sync</strong>按钮，进行同步，之后会显示如下界面,表示仓库连接成功：<br><img src="/upload/gitbook/succacc.png" alt="succacc"></p>
+<h3 id="6-配置webhook"><a href="#6-配置webhook" class="headerlink" title="6. 配置webhook"></a>6. 配置webhook</h3><p>在gitbook设置里，配置webhook,使github仓库内容和gitbook同步更新<br>点击 <code>Settings &gt; Hooks &gt; New Webhook</code><br><img src="/upload/gitbook/addhook.png" alt="addhook"><br>在 <strong>Payload URL</strong>里填上刚刚github上新建的testbook仓库的地址，Secret可填可不填，博主选择不填<br>github仓库地址获取如下<br><img src="/upload/gitbook/gitaddress.png" alt="gitaddress"><br>gitbook上填写完毕截图如下：<br><img src="/upload/gitbook/hookdetail.png" alt="hookdetail"><br><img src="/upload/gitbook/hookcomplete.png" alt="hookcomplete"><br>此时，在github的testbook仓库设置里，webhooks选项应该会多出一个，表示刚刚配置的gitbook上的webhook连接github成功<br><img src="/upload/gitbook/hookcomplete.png" alt="githubhook"><br>如果没有的话，手动添加截图如下：<br>切换到<strong>gitbook</strong>网站，在gitbook上的testbook书籍设置里获取webhook url<br><img src="/upload/gitbook/gitbookhookurl.png" alt="gitbookhookurl"><br>复制这个url地址，切换到<strong>github</strong>的testbook仓库设置里<br><img src="/upload/gitbook/githubaddhook1.png" alt="githubaddhook1"><br><img src="/upload/gitbook/githubaddhook2.png" alt="githubaddhook2"><br>如果在之前配置<strong>gitbook</strong>的webhook时有设置secret，那么在<strong>github</strong>上的secret选项也要填上</p>
+<p><strong>此时，关于gitbook和github的配置已结束</strong><br>测试是否正常工作，在<strong>github</strong>的testbook仓库，点击修改readme.md内容，发起<em>Commit changes</em>,然后在<strong>gitbook</strong>上刷新testbook，点击update,即可预览testbook内容，此时，如果有配置邮件，你会收到一封邮件，通知你的gitbook创建成功了。</p>
+<blockquote>
+<p>注：不要急着去点击下图的 read shortly,因为gitbook编译可能需要一段时间，过早点击可能造成无法发布生成图书，然后当网络比较慢的时候也可能造成图书生成不成功，这个时候不要方，再来一次，或者等待gitbook服务器修复好(因为gitbook不是特别稳定，容易出bug，博主好几次生不出图书，然后等到第二天，啥都没干，一刷新就好了，所以如果前面的步骤严格遵循，你要相信，这不是你的锅，其实你的书已经发布成功了，可以参考后面的如何本地预览图书)<br><img src="/upload/gitbook/testbook1.png" alt="testbook1"><br><img src="/upload/gitbook/testbook2.png" alt="testbook2"><br><img src="/upload/gitbook/testbook3.png" alt="testbook3"><br><img src="/upload/gitbook/testbook4.png" alt="testbook4"></p>
+</blockquote>
+<hr>
+<h3 id="7-本地编写书籍"><a href="#7-本地编写书籍" class="headerlink" title="7. 本地编写书籍"></a>7. 本地编写书籍</h3><p>我们这里还是以一本空的书籍为开始，从初始化到最终发布，在gitbook上预览<br>编写分为两种，一种是使用gitbook官方提供的客户端，<a href="https://www.gitbook.com/blog/releases" target="_blank" rel="external">gitbook editor</a> , 一种是使用<code>文本编辑器+gitbook命令行+git</code> 来编写，客户端比较简单，看官请自行摸索，我们这里介绍第二种比较极客的编写模式</p>
+<h4 id="1-通过npm安装gitbook-cli"><a href="#1-通过npm安装gitbook-cli" class="headerlink" title="1. 通过npm安装gitbook-cli"></a>1. 通过npm安装gitbook-cli</h4><p>npm是nodejs包管理工具，直接下载安装nodejs，会自带npm包管理工具<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g gitbook-cli</div></pre></td></tr></table></figure></p>
+<p>全局安装gitbook命令行，安装完毕后，使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gitbook -V</div></pre></td></tr></table></figure></p>
+<p>测试是否成功安装gitbook</p>
+<h4 id="2-下载github仓库内容，并手动建立-SUMMARY-md"><a href="#2-下载github仓库内容，并手动建立-SUMMARY-md" class="headerlink" title="2. 下载github仓库内容，并手动建立 SUMMARY.md"></a>2. 下载github仓库内容，并手动建立 SUMMARY.md</h4><p>首先下载github上testbook仓库内容，选择一个自己喜欢的目录，比如博主的本地地址 D:\github<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> d:\github</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/Superlee2013/testbook.git</div></pre></td></tr></table></figure></p>
+<p>然后进入刚刚下载好的仓库里,新建 SUMMARY.md<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> /d/github/testbook</div><div class="line">$ touch SUMMARY.md</div></pre></td></tr></table></figure></p>
+<p>这个SUMMARY.md就是最后的书的目录，同时gitbook会根据该文件生成相应的目录结构<br><img src="/upload/gitbook/local1.png" alt="local1"></p>
+<h4 id="3-编辑SUMMARY-md-生成目录结构"><a href="#3-编辑SUMMARY-md-生成目录结构" class="headerlink" title="3. 编辑SUMMARY.md,生成目录结构"></a>3. 编辑SUMMARY.md,生成目录结构</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="bullet">* </span>[<span class="string">简介</span>](<span class="link">README.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="string">第一章</span>](<span class="link">chapter1/README.md</span>)</div><div class="line">  - [<span class="string">第一节</span>](<span class="link">chapter1/section1.md</span>)</div><div class="line">  - [<span class="string">第二节</span>](<span class="link">chapter1/section2.md</span>)</div><div class="line">  - [<span class="string">第三节</span>](<span class="link">chapter1/section3.md</span>)</div><div class="line">  - [<span class="string">第四节</span>](<span class="link">chapter1/section4.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="string">第二章</span>](<span class="link">chapter2/README.md</span>)</div><div class="line">  - [<span class="string">第一节</span>](<span class="link">chapter2/section1.md</span>)</div><div class="line">  - [<span class="string">第二节</span>](<span class="link">chapter2/section2.md</span>)</div><div class="line">  - [<span class="string">第三节</span>](<span class="link">chapter2/section3.md</span>)</div><div class="line"><span class="bullet">* </span>[<span class="string">第三章</span>](<span class="link">chapter3/README.md</span>)</div><div class="line">  - [<span class="string">第一节</span>](<span class="link">chapter3/section1.md</span>)</div></pre></td></tr></table></figure>
+<p>然后进入命令行，进入testbook这本书的本地目录下，执行如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gitbook init</div></pre></td></tr></table></figure></p>
+<p><img src="/upload/gitbook/local2.png" alt="local2"><br>最终本地的目录结构如下：<br><img src="/upload/gitbook/local3.png" alt="local3"><br>然后，可以拿你喜欢的的文本编辑器进行gitbook的书写，博主推荐 <a href="https://www.sublimetext.com/" target="_blank" rel="external">sublime text 3</a> , 当然，如果要实时预览markdown，博主推荐 <a href="http://www.typora.io/" target="_blank" rel="external">typora</a></p>
+<h4 id="4-gitbook本地预览"><a href="#4-gitbook本地预览" class="headerlink" title="4. gitbook本地预览"></a>4. gitbook本地预览</h4><p>在推送到远程github之前，可以本地预览最终的gitbook效果，执行如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gitbook serve</div></pre></td></tr></table></figure></p>
+<p><img src="/upload/gitbook/gitbookserve.png" alt="gitbookserve"><br>然后，浏览器打开localhost:4000 即可在预览</p>
+<h4 id="5-向远程仓库推送"><a href="#5-向远程仓库推送" class="headerlink" title="5. 向远程仓库推送"></a>5. 向远程仓库推送</h4><p>编写好这些markdown文件后，使用git命令行向远程仓库推送<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git add .</div><div class="line">$ git commit -m<span class="string">"update"</span></div><div class="line">$ git push origin master</div></pre></td></tr></table></figure></p>
+<p>此时，可以查看github仓库有没有推送成功，然后在gitbook上，打开testbook,点击<code>Read</code>,即可看到最终的书籍样式<br><img src="/upload/gitbook/local3.png" alt="bookc1"></p>
+<p><strong>到此，从零开始创建gitbook，并通过github托管的所有过程结束，现在可以愉快的编写专属你的电子书了</strong></p>
+<h2 id="协同创建gitbook-多人"><a href="#协同创建gitbook-多人" class="headerlink" title="协同创建gitbook(多人)"></a>协同创建gitbook(多人)</h2><p>协作创建的意思是，已经有一个gitbook的书籍了，然后我们fork到github本地，通过发起<code>pull request</code>请求进行协同创作书籍</p>
+<h3 id="1-fork仓库到自己的github账号"><a href="#1-fork仓库到自己的github账号" class="headerlink" title="1. fork仓库到自己的github账号"></a>1. fork仓库到自己的github账号</h3><p>找到需要参加协作编写的仓库地址，fork到自己的github账户仓库<br><img src="/upload/gitbook/c1.png" alt="c1"></p>
+<h3 id="2-下载到本地"><a href="#2-下载到本地" class="headerlink" title="2. 下载到本地"></a>2. 下载到本地</h3><p>复制刚刚fork到自己的仓库的url地址，clone到本地<br><img src="/upload/gitbook/cf1.png" alt="cf1"><br><img src="/upload/gitbook/c2.png" alt="c2"></p>
+<h3 id="3-gitbook本地预览"><a href="#3-gitbook本地预览" class="headerlink" title="3. gitbook本地预览"></a>3. gitbook本地预览</h3><p>在推送到远程github之前，可以本地预览最终的gitbook效果，执行如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gitbook server</div></pre></td></tr></table></figure></p>
+<p><img src="/upload/gitbook/gitbookserve.png" alt="gitbookserve"><br>然后，浏览器打开localhost:4000 即可在预览</p>
+<h3 id="4-编写后提交到自己的仓库"><a href="#4-编写后提交到自己的仓库" class="headerlink" title="4.编写后提交到自己的仓库"></a>4.编写后提交到自己的仓库</h3><p><img src="/upload/gitbook/c3.png" alt="c3"></p>
+<h3 id="5-在github网站上发起pull-request请求"><a href="#5-在github网站上发起pull-request请求" class="headerlink" title="5. 在github网站上发起pull request请求"></a>5. 在github网站上发起pull request请求</h3><p><img src="/upload/gitbook/c4.png" alt="c4"><br><img src="/upload/gitbook/c5.png" alt="c5"><br><img src="/upload/gitbook/c6.png" alt="c6"></p>
+<p>如果有冲突的时候，github网站会给出提示，标识本次pull request可能造成conflict</p>
+<p>然后，等待原仓库管理员进行merge操作就可以了</p>
+<p>如果你需要从已有的github仓库创建一本属于自己的gitbook，比如上文中你从别人的仓库fork过来的，这个时候，只需要在gitbook上新建图书，然后连接github仓库就好，详细请参考第一部分<strong>从零开始创建gitbook(单人)</strong>,也就是你不需要在github上新建仓库，</p>
+<blockquote>
+<p>以上即是关于gitbook操作的全部内容，转载请注明出处<br>关于文章中的描述，如有疑问，请在下面的评论区留言，博主会第一时间进行解答更新</p>
+</blockquote>
+
+      
+      <hr>
+      <p>
+         博客: <a href="http://superleehome.oschina.io">http://superleehome.oschina.io/</a>
+         <br>
+         作者: <a href="http://superleehome.oschina.io/about">Superlee</a>
+      </p>
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持干货知识技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Superlee Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gitbook/" rel="tag">#gitbook</a>
+          
+            <a href="/tags/github/" rel="tag">#github</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/20/NexT主题配置/" rel="next" title="NexT主题配置">
+                <i class="fa fa-chevron-left"></i> NexT主题配置
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/21/从零开始创建gitbook/"
+     data-title="从零开始创建gitbook"
+     data-content=""
+     data-url="http://superleehome.oschina.io/2016/10/21/从零开始创建gitbook/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/21/从零开始创建gitbook/"
+           data-title="从零开始创建gitbook" data-url="http://superleehome.oschina.io/2016/10/21/从零开始创建gitbook/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Superlee" />
+          <p class="site-author-name" itemprop="name">Superlee</p>
+          <p class="site-description motion-element" itemprop="description">青春都一饷，且把浮生，换了代码轻狂~</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Superlee2013" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://geek.csdn.net/" title="极客头条" target="_blank">极客头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://toutiao.io/" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.iteye.com/" title="ITEye" target="_blank">ITEye</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://leetcode.com/" title="LeetCode" target="_blank">LeetCode</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从零开始创建gitbook-单人"><span class="nav-number">1.</span> <span class="nav-text">从零开始创建gitbook(单人)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-申请gitbook账号"><span class="nav-number">1.1.</span> <span class="nav-text">1. 申请gitbook账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设置gitbook连接github权限"><span class="nav-number">1.2.</span> <span class="nav-text">2. 设置gitbook连接github权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在github上创建仓库"><span class="nav-number">1.3.</span> <span class="nav-text">3. 在github上创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-在gitbook上创建书籍"><span class="nav-number">1.4.</span> <span class="nav-text">4. 在gitbook上创建书籍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-连接gitbook与github仓库"><span class="nav-number">1.5.</span> <span class="nav-text">5. 连接gitbook与github仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-配置webhook"><span class="nav-number">1.6.</span> <span class="nav-text">6. 配置webhook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-本地编写书籍"><span class="nav-number">1.7.</span> <span class="nav-text">7. 本地编写书籍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-通过npm安装gitbook-cli"><span class="nav-number">1.7.1.</span> <span class="nav-text">1. 通过npm安装gitbook-cli</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下载github仓库内容，并手动建立-SUMMARY-md"><span class="nav-number">1.7.2.</span> <span class="nav-text">2. 下载github仓库内容，并手动建立 SUMMARY.md</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-编辑SUMMARY-md-生成目录结构"><span class="nav-number">1.7.3.</span> <span class="nav-text">3. 编辑SUMMARY.md,生成目录结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-gitbook本地预览"><span class="nav-number">1.7.4.</span> <span class="nav-text">4. gitbook本地预览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-向远程仓库推送"><span class="nav-number">1.7.5.</span> <span class="nav-text">5. 向远程仓库推送</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协同创建gitbook-多人"><span class="nav-number">2.</span> <span class="nav-text">协同创建gitbook(多人)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-fork仓库到自己的github账号"><span class="nav-number">2.1.</span> <span class="nav-text">1. fork仓库到自己的github账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载到本地"><span class="nav-number">2.2.</span> <span class="nav-text">2. 下载到本地</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-gitbook本地预览"><span class="nav-number">2.3.</span> <span class="nav-text">3. gitbook本地预览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-编写后提交到自己的仓库"><span class="nav-number">2.4.</span> <span class="nav-text">4.编写后提交到自己的仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-在github网站上发起pull-request请求"><span class="nav-number">2.5.</span> <span class="nav-text">5. 在github网站上发起pull request请求</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">您是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位小伙伴</span>
+  
+
+  
+    <span class="site-pv">我被看了<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Superlee</span>
+  <span class="with-love">
+        <i class="fa fa-envelope-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">superlee4life@foxmail.com</span>
+</div>
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"superleeblog2"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("x9h2WvWJwEXLMxFiGxoO6OvY-gzGzoHsz", "oc8OE6Iruzw7yKaiU0dU6QDr");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
