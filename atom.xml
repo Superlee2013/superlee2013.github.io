@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://superleehome.oschina.io/"/>
-  <updated>2016-11-11T04:40:58.000Z</updated>
+  <updated>2016-12-31T03:54:24.000Z</updated>
   <id>http://superleehome.oschina.io/</id>
   
   <author>
@@ -14,6 +14,95 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端学习整理</title>
+    <link href="http://superleehome.oschina.io/2016/12/31/learning-of-frontend/"/>
+    <id>http://superleehome.oschina.io/2016/12/31/learning-of-frontend/</id>
+    <published>2016-12-31T03:51:15.000Z</published>
+    <updated>2016-12-31T03:54:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="语言篇"><a href="#语言篇" class="headerlink" title="语言篇"></a>语言篇</h2><h3 id="基本语言篇"><a href="#基本语言篇" class="headerlink" title="基本语言篇"></a>基本语言篇</h3><ol>
+<li><p>Javascript<br>前端三大基石之一，最关键的一部分，web页面从静态页面进化为动态页面（静态页面指的是没有交互，只做单纯的展示，动态页面有和用户、和服务器的交互）的关键，有没有入门前端，主要看js掌握的程度，这也是以后研究全栈技术（这里指狭隘的全栈，即前端、后台、服务器、数据库、移动端，技术都掌握）</p>
+</li>
+<li><p>CSS<br>中文名为层叠样式表，是网页最终展示形式的关键，它是一组样式的汇总，为结构化文档（如 HTML 文档或 XML 应用）添加样式（字体、间距和颜色等）的语言。css基本上用多了就熟练了，不会的或者忘记了的上网查就可以了</p>
+</li>
+<li><p>HTML<br>中文全称为超文本标记语言，它的作用是在于为网站页面搭建一个基本的框架，就好比盖房子，html是那些固定房子架构的东西，css就是房子里的装饰，js就是连接两者的工具，以及让房子更实用更生动的进化剂（比如开关门，带动作的这种）</p>
+</li>
+</ol>
+<h3 id="进阶语言篇"><a href="#进阶语言篇" class="headerlink" title="进阶语言篇"></a>进阶语言篇</h3><p>这一部分，描述在前面的基础上的扩展，如果是前端开发的新手，这一部分不用详细了解，只需要原来前端还有这么个东西，有个概念就行，然后等之后有了一定的开发经验，再回头研究这些相关技术。当然，这里也只会做个概述，具体的可以google详细内容</p>
+<ol>
+<li><p>ES2016<br>全称ECMAScript6,ECMAScript是JavaScript的标准，es6是对现有javascript语言的扩展，比如class关键字来规定模块等，它的目标，是使得JavaScript语言可以用来编写复杂的大型应用程序，成为企业级开发语言，详细学习可参考<a href="http://es6.ruanyifeng.com/#docs/intro" target="_blank" rel="external">ECMAScript 6</a></p>
+</li>
+<li><p>HTML5</p>
+</li>
+<li><p>CSS3</p>
+</li>
+<li><p>SASS/LESS</p>
+</li>
+<li><p>NodeJS</p>
+</li>
+</ol>
+<h2 id="工具篇"><a href="#工具篇" class="headerlink" title="工具篇"></a>工具篇</h2><h3 id="开发工具篇"><a href="#开发工具篇" class="headerlink" title="开发工具篇"></a>开发工具篇</h3><ol>
+<li><p>Chrome</p>
+</li>
+<li><p>Sublime Text/VSCode/Atom</p>
+</li>
+<li><p>WebStorm</p>
+</li>
+<li><p>http-server</p>
+</li>
+</ol>
+<h3 id="包管理工具篇"><a href="#包管理工具篇" class="headerlink" title="包管理工具篇"></a>包管理工具篇</h3><ol>
+<li><p>NPM</p>
+</li>
+<li><p>Bower</p>
+</li>
+</ol>
+<h2 id="框架篇"><a href="#框架篇" class="headerlink" title="框架篇"></a>框架篇</h2><h3 id="网站框架篇"><a href="#网站框架篇" class="headerlink" title="网站框架篇"></a>网站框架篇</h3><ol>
+<li><p>Bootstrap (css)</p>
+</li>
+<li><p>AngularJS</p>
+</li>
+<li><p>React</p>
+</li>
+<li><p>Vue</p>
+</li>
+<li><p>Jquery</p>
+</li>
+</ol>
+<h3 id="移动端框架篇"><a href="#移动端框架篇" class="headerlink" title="移动端框架篇"></a>移动端框架篇</h3><ol>
+<li><p>React Native</p>
+</li>
+<li><p>Ionic</p>
+</li>
+</ol>
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><h3 id="视频资源"><a href="#视频资源" class="headerlink" title="视频资源"></a>视频资源</h3><ol>
+<li><p><a href="http://www.w3school.com.cn/index.html" target="_blank" rel="external">w3school</a></p>
+</li>
+<li><p><a href="http://www.w3cschool.cn/manual" target="_blank" rel="external">W3Cschool</a></p>
+</li>
+<li><p><a href="http://www.imooc.com/" target="_blank" rel="external">慕课网</a></p>
+</li>
+<li><p><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">廖雪峰JavaScript教程</a></p>
+</li>
+<li><p><a href="http://www.ruanyifeng.com/blog/javascript/" target="_blank" rel="external">阮一峰Javascript参考</a></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;语言篇&quot;&gt;&lt;a href=&quot;#语言篇&quot; class=&quot;headerlink&quot; title=&quot;语言篇&quot;&gt;&lt;/a&gt;语言篇&lt;/h2&gt;&lt;h3 id=&quot;基本语言篇&quot;&gt;&lt;a href=&quot;#基本语言篇&quot; class=&quot;headerlink&quot; title=&quot;基本语言篇&quot;&gt;&lt;/a&gt;
+    
+    </summary>
+    
+      <category term="前端" scheme="http://superleehome.oschina.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="前端" scheme="http://superleehome.oschina.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>从零开始创建gitbook</title>
