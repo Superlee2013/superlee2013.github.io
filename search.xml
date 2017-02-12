@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[前端学习整理]]></title>
-      <url>http://superleehome.oschina.io/2016/12/31/learning-of-frontend/</url>
+      <url>http://superlee2013.github.io/2016/12/31/learning-of-frontend/</url>
       <content type="html"><![CDATA[<h2 id="语言篇"><a href="#语言篇" class="headerlink" title="语言篇"></a>语言篇</h2><h3 id="基本语言篇"><a href="#基本语言篇" class="headerlink" title="基本语言篇"></a>基本语言篇</h3><ol>
 <li><p>Javascript<br>前端三大基石之一，最关键的一部分，web页面从静态页面进化为动态页面（静态页面指的是没有交互，只做单纯的展示，动态页面有和用户、和服务器的交互）的关键，有没有入门前端，主要看js掌握的程度，这也是以后研究全栈技术（这里指狭隘的全栈，即前端、后台、服务器、数据库、移动端，技术都掌握）</p>
 </li>
@@ -78,7 +78,7 @@
     
     <entry>
       <title><![CDATA[从零开始创建gitbook]]></title>
-      <url>http://superleehome.oschina.io/2016/10/21/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BAgitbook/</url>
+      <url>http://superlee2013.github.io/2016/10/21/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BAgitbook/</url>
       <content type="html"><![CDATA[<p>本文是博主在自己使用gitbook创建电子书，并通过github托管时躺过的坑的总结，如有表述不清楚的地方，请在评论区留言交流。本文的结构分为两大模块，分别为<strong>从零开始创建gitbook</strong>和<strong>协作开发gitbook</strong>,并假设所有的读者已有一个github账号。文章可能比较基础，大佬请绕路 ^_^</p>
 <blockquote>
 <p>由于某墙的原因，访问gitbook和github可能比较慢，请耐心等待，或者google搜索修改host翻墙，或者使用fq梯子，这里博主实力推荐 Lantern 2.2.5 版本(至于为什么是2.2.5版本……因为它free)<br>ps: 前方多图，请在wifi环境下阅读，土豪。。。随意。。</p>
@@ -129,7 +129,7 @@
     
     <entry>
       <title><![CDATA[NexT主题配置]]></title>
-      <url>http://superleehome.oschina.io/2016/10/20/NexT%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
+      <url>http://superlee2013.github.io/2016/10/20/NexT%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/</url>
       <content type="html"><![CDATA[<p>本文是介绍如何配置hexo建站后的NexT主题，参考来源于<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">NexT使用文档</a>，加上博主自己在进行NexT主题配置时躺过的一些坑，整理成如下文字。<br>注：博主的博客本地地址在d:\hexo下，所以以下文字中介绍的大部分路径以d:\hexo开头</p>
 <a id="more"></a>
 <p>本文以下内容中，<strong>主题配置文件</strong>  指NexT主题下的  _config.yml文件，比如路径地址为D:\hexo\themes\next\ _config.yml,  <strong>站点配置文件</strong> 指整个站点的  _config.yml文件，比如路径地址为D:\hexo\_config.yml </p>
@@ -195,7 +195,7 @@
     
     <entry>
       <title><![CDATA[使用hexo搭建静态博客]]></title>
-      <url>http://superleehome.oschina.io/2016/10/18/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</url>
+      <url>http://superlee2013.github.io/2016/10/18/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</url>
       <content type="html"><![CDATA[<p>本文是介绍如何使用hexo建立个人静态博客网站，并发布到github page页面上，通过github.io域名进行访问。博主在参考网上诸多资料和官方博客后，加上自己在建站时躺过的一些坑,整理成如下文字，并配上详细截图，如果文字表述不清，看官可以自学参考图片内容或面向Google建站，或在下方评论留言，谢绝恶意评论。<br>注：博主的博客本地地址在d:\hexo下，所以以下文字中介绍的大部分路径以d:\hexo开头</p>
 <a id="more"></a>
 <h3 id="（一）搭建环境依赖"><a href="#（一）搭建环境依赖" class="headerlink" title="（一）搭建环境依赖"></a>（一）搭建环境依赖</h3><p>使用github.io可以搭建一个自己的博客,把静态文件项目托管到github上,可以写博客,可以使用markdown语法,也可以展示作品,灵活性高,通过hexo工具，可以很方便快捷的建立个人博客网站</p>
@@ -272,7 +272,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo deploy</div></pre></td></tr></table></figure>
 <p>发布到个人博客网站</p>
 <blockquote>
-<p>关于next主题配置相关文档，请参考<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">NexT使用文档</a>，或移步博主下篇博文<a href="http://superleehome.oschina.io/2016/10/20/NexT%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/">NexT主题配置</a></p>
+<p>关于next主题配置相关文档，请参考<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">NexT使用文档</a>，或移步博主下篇博文<a href="http://superleehome.oschina.io/2016/10/20/NexT%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">NexT主题配置</a></p>
 </blockquote>
 <p>END</p>
 ]]></content>
@@ -280,7 +280,7 @@
     
     <entry>
       <title><![CDATA[[LeetCode]Find Minimum in Rotated Sorted Array II]]></title>
-      <url>http://superleehome.oschina.io/2016/08/09/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-II/</url>
+      <url>http://superlee2013.github.io/2016/08/09/LeetCode-Find-Minimum-in-Rotated-Sorted-Array-II/</url>
       <content type="html"><![CDATA[<pre><code>Tags:Array,Binary Search
 </code></pre><a id="more"></a>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/" target="_blank" rel="external">题目描述</a></h2><blockquote>
@@ -295,7 +295,7 @@
     
     <entry>
       <title><![CDATA[[LeetCode]Power of Two]]></title>
-      <url>http://superleehome.oschina.io/2016/08/08/LeetCode-Power-of-Two/</url>
+      <url>http://superlee2013.github.io/2016/08/08/LeetCode-Power-of-Two/</url>
       <content type="html"><![CDATA[<pre><code>Tags:Math,Bit Manipulation
 </code></pre><a id="more"></a>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><a href="https://leetcode.com/problems/power-of-two/" target="_blank" rel="external">题目描述</a></h2><p>Given an integer, write a function to determine if it is a power of two.<br><strong>Example:</strong><br>Given s = “hello”, return “olleh”.</p>
@@ -316,7 +316,7 @@
     
     <entry>
       <title><![CDATA[[LeetCode]Reverse String]]></title>
-      <url>http://superleehome.oschina.io/2016/08/08/LeetCode-Reverse-String/</url>
+      <url>http://superlee2013.github.io/2016/08/08/LeetCode-Reverse-String/</url>
       <content type="html"><![CDATA[<pre><code>Tags:Two Pointers,String
 </code></pre><a id="more"></a>
 <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a><a href="https://leetcode.com/problems/reverse-string/" target="_blank" rel="external">题目描述</a></h2><p>Write a function that takes a string as input and returns the string reversed.<br><strong>Example:</strong><br>Given s = “hello”, return “olleh”.</p>
@@ -332,7 +332,7 @@
     
     <entry>
       <title><![CDATA[Angular图片裁剪1--本地图片读取及显示]]></title>
-      <url>http://superleehome.oschina.io/2016/07/31/Angular%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA1--%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%AF%BB%E5%8F%96%E5%8F%8A%E6%98%BE%E7%A4%BA/</url>
+      <url>http://superlee2013.github.io/2016/07/31/Angular%E5%9B%BE%E7%89%87%E8%A3%81%E5%89%AA1--%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%AF%BB%E5%8F%96%E5%8F%8A%E6%98%BE%E7%A4%BA/</url>
       <content type="html"><![CDATA[<p>本文的内容是博主在封装一个angular的图片裁剪工具时的一些心得和体验，记录下来，方便之后回顾。<br>所涉及到的angular的技术：指令封装、指令依赖、H5资源接口FileReader</p>
 <a id="more"></a>
 <h3 id="需求说明"><a href="#需求说明" class="headerlink" title="需求说明"></a>需求说明</h3><p>点击按钮或div(按钮样式可自定义),跳出选取文件框，选取图片资源文件后，在模态对话框上进行图片处理，保存时在页面显示处理后图片内容。<br>效果显示图如下：<br><img src="/upload/clipImg1.gif" alt="效果图"></p>
@@ -375,7 +375,7 @@
     
     <entry>
       <title><![CDATA[CSS浮动知识整理]]></title>
-      <url>http://superleehome.oschina.io/2016/07/30/CSS%E6%B5%AE%E5%8A%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</url>
+      <url>http://superlee2013.github.io/2016/07/30/CSS%E6%B5%AE%E5%8A%A8%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>说明:本文原载<a href="http://www.cnblogs.com/iyangyuan/archive/2013/03/27/2983813.html" target="_blank" rel="external">经验分享：CSS浮动(float,clear)通俗讲解</a>，博主只是稍作整理^_^</p>
 </blockquote>
@@ -403,7 +403,7 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[层布局模型]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/%E5%B1%82%E5%B8%83%E5%B1%80%E6%A8%A1%E5%9E%8B/</url>
+      <url>http://superlee2013.github.io/2016/07/26/%E5%B1%82%E5%B8%83%E5%B1%80%E6%A8%A1%E5%9E%8B/</url>
       <content type="html"><![CDATA[<h2 id="什么是层模型？"><a href="#什么是层模型？" class="headerlink" title="什么是层模型？"></a>什么是层模型？</h2><p>什么是层布局模型？层布局模型就像是图像软件PhotoShop中非常流行的图层编辑功能一样，每个图层能够精确定位操作，但在网页设计领域，由于网页大小的活动性，层布局没能受到热捧。但是在网页上局部使用层布局还是有其方便之处的。下面我们来学习一下html中的层布局。<br>如何让html元素在网页中精确定位，就像图像软件PhotoShop中的图层一样可以对每个图层能够精确定位操作。CSS定义了一组定位（positioning）属性来支持层布局模型。</p>
 <p>层模型有三种形式：</p>
 <ul>
@@ -435,7 +435,7 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[基于AOP的iOS用户操作引导框架设计]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/%E5%9F%BA%E4%BA%8EAOP%E7%9A%84iOS%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E5%BC%95%E5%AF%BC%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1/</url>
+      <url>http://superlee2013.github.io/2016/07/26/%E5%9F%BA%E4%BA%8EAOP%E7%9A%84iOS%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E5%BC%95%E5%AF%BC%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1/</url>
       <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>有一种现象，App设计者觉得理所当然的操作方式，却常常被用户所忽视，为了防止这种现象发生，就要为App设计一个帮助，一种低成本的方案是将帮助文档写成HTML然后展示给用户，这样的方式常常不能带来好的效果，一种较好的方式是高亮用户应该点击的区域，对其他部分进行遮盖，并用说明文字提醒用户，如下图所示。<a href="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.gif" target="_blank" rel="external">点击这里观看动画演示</a><br><img src="https://raw.githubusercontent.com/Soulghost/SGUserGuide/master/images/guide.png" alt=""></p>
 <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>框架<a href="https://github.com/Soulghost/SGUserGuide" target="_blank" rel="external">SGUserGuide</a>已经上传到github，<a href="https://github.com/Soulghost/SGUserGuide" target="_blank" rel="external">点击前去github下载</a>，欢迎Star！</p>
 <h2 id="关键"><a href="#关键" class="headerlink" title="关键"></a>关键</h2><p>要实现这种引导，关键问题有二，一是如何拿到允许交互的控件，二是如何处理引导步骤的推进关系。<br>对于第一个问题，可以通过keyPath解决，keyPath的强大之处在于可以用点语法拿到更深层的私有，例如我们的ViewController有一个私有属性topView，而topView又有私有属性topButton，那么我们使用<code>topView.topButton</code>即可从ViewController中拿到控件topButton而丝毫不破坏其封装性。<br>对于第二个问题，可以通过AOP编程解决。我们知道大部分的交互都涉及页面切换，例如上图点击按钮后进入编辑页面，因此页面的切换可以作为一个“切面”，我们通过这个切面来处理大部分的引导步骤推进。我们可以通过<strong>Method Swizzling</strong>来拦截所有的viewWillAppear:方法，并处理引导步骤的判断与推进，需要注意的是还有一些不涉及页面切换的引导步骤，则需要在适当的地方手动推进。</p>
@@ -461,7 +461,7 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[WiFi文件上传框架SGWiFiUpload]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/WiFi%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%A1%86%E6%9E%B6SGWiFiUpload/</url>
+      <url>http://superlee2013.github.io/2016/07/26/WiFi%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%A1%86%E6%9E%B6SGWiFiUpload/</url>
       <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>在iOS端由于文件系统的封闭性，文件的上传变得十分麻烦，一个比较好的解决方案是通过局域网WiFi来传输文件并存储到沙盒中。</p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://github.com/Soulghost/SGWiFiUpload" target="_blank" rel="external">SGWiFiUpload</a>是一个基于<a href="https://github.com/robbiehanson/CocoaHTTPServer" target="_blank" rel="external">CocoaHTTPServer</a>的WiFi上传框架。CocoaHTTPServer是一个可运行于iOS和OS X上的轻量级服务端框架，可以处理GET和POST请求，通过对代码的初步改造，实现了iOS端的WiFi文件上传与上传状态监听。</p>
 <h3 id="下载与使用"><a href="#下载与使用" class="headerlink" title="下载与使用"></a>下载与使用</h3><p>目前已经做成了易用的框架，上传到了GitHub，<a href="https://github.com/Soulghost/SGWiFiUpload" target="_blank" rel="external">点击这里进入</a>，欢迎Star！</p>
@@ -484,7 +484,7 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[iOS图形手势识别框架SGGestureRecognizer]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/iOS%E5%9B%BE%E5%BD%A2%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB%E6%A1%86%E6%9E%B6SGGestureRecognizer/</url>
+      <url>http://superlee2013.github.io/2016/07/26/iOS%E5%9B%BE%E5%BD%A2%E6%89%8B%E5%8A%BF%E8%AF%86%E5%88%AB%E6%A1%86%E6%9E%B6SGGestureRecognizer/</url>
       <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>苹果官方为我们提供了简单手势的识别器，但对于图形手势，例如五角星、三角形等的识别，就需要自己实现了。通过识别这些手势，可以去执行特定的操作，或是输入公式、释放魔法等，可以为App增光添彩。</p>
 <h2 id="下载与使用"><a href="#下载与使用" class="headerlink" title="下载与使用"></a>下载与使用</h2><p>该框架已经上传到github，<a href="https://github.com/Soulghost/SGGestureRecognizer" target="_blank" rel="external">点击这里前去下载</a>，欢迎Star！<br>有关该框架的使用在github上已经写明，这里不再赘述，本文主要介绍的是图形手势识别的实现原理与框架的结构。</p>
 <h2 id="框架的结构"><a href="#框架的结构" class="headerlink" title="框架的结构"></a>框架的结构</h2><p>一个图形手势是一条曲线，可以用采样点来描述，存储采样点的类为<code>SGGesturePoint</code>，使用它替代<code>CGPoint</code>，更符合面向对象的操作规范。<br>采样点的集合为<code>SGGestureSet</code>，它用于记录所有采样点以及手势的名称，以及标准化以后的手势向量。<br>手势向量使用<code>SGGestureVector</code>存储，向量通过将所有采样点的(x,y)坐标依次插入并标准化得来，手势向量用于进行余弦相似度计算。<br>用于标准化集合、生成向量、保存、加载与识别手势的类为<code>SGGestureManager</code>，它是一个单例对象，正常使用中只需要关心manager和set两个对象，其他对象由manager负责管理。</p>
@@ -504,7 +504,7 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[Sublime Text 2 插件]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/SublimeText2%E5%AE%9E%E7%94%A8%E6%8F%92%E4%BB%B6/</url>
+      <url>http://superlee2013.github.io/2016/07/26/SublimeText2%E5%AE%9E%E7%94%A8%E6%8F%92%E4%BB%B6/</url>
       <content type="html"><![CDATA[<h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><blockquote>
 <p>下面会介绍很多有用的插件，个人感觉，最有用的是ZenCoding,现在更名叫Emmet.所以，作为html/css编译器，其他插件可以不安装，这个强烈建议安装一下</p>
 </blockquote>
@@ -545,8 +545,8 @@ div的顺序是HTML代码中div的顺序决定的。
     
     <entry>
       <title><![CDATA[Hello World]]></title>
-      <url>http://superleehome.oschina.io/2016/07/26/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="http://superlee2013.github.io/" target="_blank" rel="external">Superlee’s blog</a></p>
+      <url>http://superlee2013.github.io/2016/07/26/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="http://superlee2013.github.io/">Superlee’s blog</a></p>
 <a id="more"></a>
 <p>This is my first blog ,and I’ll be here to write down all little affairs as of my study.<br>Good luck to myself!<br><strong><em>Tribute to the programmer of Hello-World!</em></strong></p>
 ]]></content>
